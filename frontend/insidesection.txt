@@ -1,0 +1,67 @@
+menuData?.sections?.map((sec, sectionIndex) => {
+          return (
+            <div className="border-b border-b-gray-300 pb-[20px] mb-[20px]">
+              {/* Section */}
+              <div className="mb-[30px]">
+                <Label>{"Section Name"}</Label>
+                <Input type="text" value={sec.title} />
+              </div>
+              {/* Variance */}
+              {sec?.variants?.map((variant, index) => {
+                return (
+                  <div className="mb-[20px]">
+                    <Label>{`Variant Name ${index + 1}`}</Label>
+                    <Input type="text" value={variant.name} />
+                  </div>
+                );
+              })}
+              {/* Items */}
+              <div key={sec.id} className="mb-6">
+                <h3 className="font-semibold mb-2">{sec.title}</h3>
+                <table className="w-full border border-gray-300 rounded">
+                  <thead className="bg-gray-100">
+                    <tr>
+                      <th className="border px-2 py-1 text-left">Item Name</th>
+                      {sec.variants?.map((variant) => (
+                        <th
+                          key={variant.id}
+                          className="border px-2 py-1 text-left"
+                        >
+                          {variant.name} Price
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sec.items?.map((item, itemIndex) => (
+                      <tr
+                        key={item.id}
+                        className="odd:bg-white even:bg-gray-50"
+                      >
+                        <td className="border px-2 py-1">{item.name}</td>
+                        {sec.variants?.map((variant, variantIndex) => {
+                          // find variant value for this item
+                          const variantPrice = item.variants?.find(
+                            (v) => v.menu_section_variant_id === variant.id
+                          )?.price;
+
+                          return (
+                            <td key={variant.id} className="border px-2 py-1">
+                              <Input
+                                type="text"
+                                defaultValue={variantPrice || ""}
+                                {...register(
+                                  `sections.${sectionIndex}.items.${itemIndex}.variants.${variantIndex}.price`
+                                )}
+                              />
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          );
+        })

@@ -1,0 +1,42 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('menu_section_item_variants', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(\App\Models\Menu::class)
+                ->index()
+                ->constrained()->onDelete('cascade');
+            $table->foreignIdFor(\App\Models\MenuSection::class)
+                ->index()
+                ->constrained()->onDelete('cascade');
+            $table->foreignIdFor(\App\Models\MenuSectionVariant::class)
+                ->index()
+                ->constrained()->onDelete('cascade');
+
+            $table->foreignIdFor(\App\Models\MenuSectionItem::class)
+                ->index()
+                ->constrained()->onDelete('cascade');
+            $table->decimal('price')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('menu_section_item_variants');
+    }
+};
