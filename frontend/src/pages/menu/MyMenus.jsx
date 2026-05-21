@@ -4,22 +4,37 @@ import { makeMenu, fetchMenus } from "../../api/menu";
 import default_menu_image from "@/assets/images/menu_1.jpg";
 import { Edit, Copy, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export const MyMenus = () => {
   const [myMenus, setMyMenus] = useState([]);
   const navigate = useNavigate();
-  useEffect(() => {
-    handleFetchMenus();
-  }, []);
 
-  async function handleFetchMenus() {
-    try {
-      const res = await fetchMenus();
-      setMyMenus(res.data); // assuming API returns { data: [...] }
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  useEffect(() => {
+    let isMounted = true;
+
+    fetchMenus()
+      .then((res) => {
+        if (isMounted) {
+          setMyMenus(res.data); // assuming API returns { data: [...] }
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   async function handleGenerateNewMenu() {
     try {
@@ -31,98 +46,91 @@ export const MyMenus = () => {
   }
 
   return (
-    <div className="relative w-full min-h-screen bg-slate-50 overflow-hidden">
-      <div className="container ">
-        {/* Background icons */}
-        <div className="pointer-events-none absolute inset-0 opacity-[0.06]">
-          <div className="absolute top-20 left-10 text-[180px]">🍽️</div>
-          <div className="absolute bottom-10 right-20 text-[220px]">📋</div>
-          <div className="absolute top-1/2 right-1/3 text-[160px]">🥗</div>
-        </div>
-
-        <div className="relative z-10 py-14">
-          {/* Header */}
-          <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between mb-8 gap-[20px]">
+    <div className="min-h-[calc(100vh-4rem)] bg-muted/30">
+      <div className="container mx-auto py-10">
+        <div className="space-y-8">
+          <div className="flex flex-col items-stretch justify-between gap-4 md:flex-row md:items-center">
             <div>
-              <h4 className="text-4xl font-semibold text-slate-900">
+              <h2 className="text-3xl font-semibold tracking-tight">
                 My Menus
-              </h4>
-              <p className="mt-1 text-slate-500">
+              </h2>
+              <p className="mt-1 text-muted-foreground">
                 Create, manage, and organize your menus
               </p>
             </div>
 
-            <button
+            <Button
               onClick={handleGenerateNewMenu}
-              className="flex items-center justify-center gap-2 rounded-[6px] bg-blue-600 px-5 py-3 text-white shadow-lg transition hover:bg-blue-700 cursor-pointer"
+              className="w-full md:w-auto"
             >
               <Plus size={20} />
-              <span className="hidden sm:inline">New Menu</span>
-            </button>
+              New Menu
+            </Button>
           </div>
 
-          {/* Menus grid */}
           {myMenus.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 cursor-pointer">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {myMenus.map((menu) => (
-                <div
+                <Card
                   key={menu.slug}
-                  className="group min-h-[320px] relative bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-slate-100"
+                  className="group overflow-hidden py-0 transition-shadow hover:shadow-md"
                 >
-                  {/* Actions */}
-                  <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition z-50">
-                    <button
-                      onClick={() => {
-                        navigate(`/my-menus/${menu.slug}`);
-                      }}
-                      className="w-9 h-9 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 transition"
-                    >
-                      <Edit size={16} className="text-white" />
-                    </button>
+                  <div className="relative aspect-[4/3]">
+                    <img
+                      src={default_menu_image}
+                      alt=""
+                      className="h-full w-full object-cover"
+                    />
+                    <div className="absolute right-3 top-3 flex gap-2 opacity-0 transition group-hover:opacity-100">
+                      <Button
+                        type="button"
+                        size="icon"
+                        variant="secondary"
+                        onClick={() => navigate(`/my-menus/${menu.slug}`)}
+                      >
+                        <Edit size={16} />
+                      </Button>
 
-                    <button className="w-9 h-9 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 transition">
-                      <Copy size={16} className="text-white" />
-                    </button>
+                      <Button type="button" size="icon" variant="secondary">
+                        <Copy size={16} />
+                      </Button>
 
-                    <button className="w-9 h-9 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 transition">
-                      <Trash2 size={16} className="text-white" />
-                    </button>
-                  </div>
-
-                  <img
-                    src={default_menu_image}
-                    alt=""
-                    className="absolute inset-0 w-full h-full object-cover rounded-[6px]"
-                  />
-
-                  <div className="absolute flex flex-col justify-end items-center left-0 bottom-0 w-full h-40 bg-gradient-to-t from-black/70 to-transparent rounded-[6px]">
-                    <div className="p-6 ">
-                      {" "}
-                      <h5 className="text-xl font-semibold text-white mb-2 tracking-tight">
-                        {menu.title || "Untitled Menu"}
-                      </h5>
-                      <p className="text-slate-400 text-xs">
-                        Created ·{" "}
-                        {new Date(menu.created_at).toLocaleDateString()}
-                      </p>
+                      <Button type="button" size="icon" variant="destructive">
+                        <Trash2 size={16} />
+                      </Button>
                     </div>
                   </div>
-                </div>
+
+                  <CardHeader>
+                    <div className="flex items-start justify-between gap-3">
+                      <CardTitle className="line-clamp-2 text-lg">
+                        {menu.title || "Untitled Menu"}
+                      </CardTitle>
+                      <Badge variant="secondary">Draft</Badge>
+                    </div>
+                    <CardDescription>
+                      Created {new Date(menu.created_at).toLocaleDateString()}
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
               ))}
             </div>
           ) : (
-            <div className="mt-24 flex flex-col items-center justify-center text-center ">
-              <div className="mb-6 rounded-2xl bg-white p-8 shadow-md">
-                <span className="text-6xl">🍽️</span>
-              </div>
-              <h5 className="text-xl font-medium text-slate-800">
-                No menus yet
-              </h5>
-              <p className="mt-2 max-w-sm text-slate-500">
-                Start by creating your first menu. You can edit and update it
-                anytime.
-              </p>
-            </div>
+            <Card className="mx-auto mt-20 max-w-md text-center">
+              <CardHeader>
+                <CardTitle>No menus yet</CardTitle>
+                <CardDescription>
+                  Start by creating your first menu. You can edit and update it
+                  anytime.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button onClick={handleGenerateNewMenu}>
+                  <Plus className="h-4 w-4" />
+                  New Menu
+                </Button>
+              </CardContent>
+            </Card>
           )}
         </div>
       </div>

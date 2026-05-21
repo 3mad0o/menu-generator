@@ -67,7 +67,10 @@ class MenuSectionController extends Controller
 
         $section = $menu->Sections()->where('id', $sectionId)->firstOrFail();
 
-        $variant = $section->Variants()->create([]);
+        $variant = $section->Variants()->create([
+            'menu_id' =>$menu->id,
+            'menu_section_id' =>$section->id
+        ]);
 
 
         $items = $section->Items()->get();
@@ -150,6 +153,8 @@ class MenuSectionController extends Controller
             //item variants
             $item->Variants()->create([
                 'menu_section_variant_id' => $variant->id,
+                'menu_id' =>$menu->id,
+                'menu_section_id' =>$section->id
             ]);
         }
 

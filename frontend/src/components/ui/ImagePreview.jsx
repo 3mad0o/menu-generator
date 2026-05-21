@@ -1,38 +1,36 @@
-import React from "react";
 import { useFormContext } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
-export const ImagePreview = ({title, onRemove }) => {
+export const ImagePreview = ({ title, onRemove }) => {
   const { watch } = useFormContext();
   const imageUrl = watch("store_logo");
 
   return (
-    <div className="relative w-full mx-auto bg-white rounded-2xl shadow-md overflow-hidden">
-      {/* Image */}
+    <Card className="relative mx-auto w-full overflow-hidden py-0">
       <img
         src={imageUrl}
         alt={title || "Preview"}
-        className="w-full h-64 object-cover"
+        className="h-56 w-full object-cover"
       />
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 hover:opacity-100 transition">
-        <button
+      <div className="absolute inset-0 flex items-center justify-center bg-black/35 opacity-0 transition hover:opacity-100">
+        <Button
           onClick={onRemove}
           type="button"
-          className="bg-red-500 text-white px-4 py-2 rounded-lg cursor-pointer"
+          variant="destructive"
         >
           Remove
-        </button>
+        </Button>
       </div>
 
-      {/* Info */}
       {title && (
-        <div className="p-4">
-          <h4 className="text-lg font-semibold text-slate-800 truncate">
+        <CardContent className="p-4">
+          <h4 className="truncate text-lg font-semibold">
             {title}
           </h4>
-        </div>
+        </CardContent>
       )}
-    </div>
+    </Card>
   );
 };

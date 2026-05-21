@@ -1,0 +1,183 @@
+{
+  "message": "Menu retrived successfully",
+  "data": {
+    "title": "Quia dolorem autem.",
+    "store_name": "Volkman, Johnston and Hyatt",
+    "store_logo": null,
+    "store_subtitle": null,
+    "slug": "quisquam-odio-unde-vero-non-incidunt-vero-ad-asperiores",
+    "created_at": "2026-05-21T16:23:41.000000Z",
+    "updated_at": "2026-05-21T16:23:41.000000Z",
+    "device_id": null,
+    "user_id": null,
+    "sections": [
+      {
+        "id": 1,
+        "title": "Appetizers",
+        "order": 1,
+        "variants": [
+          {
+            "id": 1,
+            "name": "Regular"
+          },
+          {
+            "id": 2,
+            "name": "Spicy"
+          }
+        ],
+        "items": [
+          {
+            "id": 1,
+            "name": "Item 1",
+            "variants": [
+              {
+                "id": 1,
+                "price": "9.99",
+                "menu_section_variant_id": 1
+              },
+              {
+                "id": 3,
+                "price": "9.99",
+                "menu_section_variant_id": 2
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "name": "Item 2",
+            "variants": [
+              {
+                "id": 2,
+                "price": "9.99",
+                "menu_section_variant_id": 1
+              },
+              {
+                "id": 4,
+                "price": "9.99",
+                "menu_section_variant_id": 2
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Main Courses",
+        "order": 1,
+        "variants": [
+          {
+            "id": 3,
+            "name": "Regular"
+          },
+          {
+            "id": 4,
+            "name": "Spicy"
+          }
+        ],
+        "items": [
+          {
+            "id": 3,
+            "name": "Item 1",
+            "variants": [
+              {
+                "id": 5,
+                "price": "9.99",
+                "menu_section_variant_id": 3
+              },
+              {
+                "id": 7,
+                "price": "9.99",
+                "menu_section_variant_id": 4
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "name": "Item 2",
+            "variants": [
+              {
+                "id": 6,
+                "price": "9.99",
+                "menu_section_variant_id": 3
+              },
+              {
+                "id": 8,
+                "price": "9.99",
+                "menu_section_variant_id": 4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Desserts",
+        "order": 1,
+        "variants": [
+          {
+            "id": 5,
+            "name": "Regular"
+          },
+          {
+            "id": 6,
+            "name": "Spicy"
+          }
+        ],
+        "items": [
+          {
+            "id": 5,
+            "name": "Item 1",
+            "variants": [
+              {
+                "id": 9,
+                "price": "9.99",
+                "menu_section_variant_id": 5
+              },
+              {
+                "id": 11,
+                "price": "9.99",
+                "menu_section_variant_id": 6
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "name": "Item 2",
+            "variants": [
+              {
+                "id": 10,
+                "price": "9.99",
+                "menu_section_variant_id": 5
+              },
+              {
+                "id": 12,
+                "price": "9.99",
+                "menu_section_variant_id": 6
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "contacts": [
+      {
+        "id": 1,
+        "menu_id": 1,
+        "type": "phone",
+        "value": "123-456-7890",
+        "created_at": "2026-05-21T16:23:41.000000Z",
+        "updated_at": "2026-05-21T16:23:41.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 2,
+        "menu_id": 1,
+        "type": "email",
+        "value": "e@admin.com",
+        "created_at": "2026-05-21T16:23:41.000000Z",
+        "updated_at": "2026-05-21T16:23:41.000000Z",
+        "deleted_at": null
+      }
+    ]
+  }
+}

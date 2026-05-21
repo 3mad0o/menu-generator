@@ -1,5 +1,4 @@
 import axios from "axios";
-import { nanoid } from "nanoid";
 import getDeviceId from "@/utils/getDeviceId";
 const API_URL = import.meta.env.VITE_API_URL;
 const api = axios.create({
